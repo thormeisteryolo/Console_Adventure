@@ -1,0 +1,11 @@
+monsters = {
+    "goblin": {
+
+    },
+    "golem": {
+
+    },
+    "bandit": {
+        
+    }
+}
