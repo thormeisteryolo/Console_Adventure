@@ -21,6 +21,27 @@ armorInfo = {
         "mobility" : 0.75
     }
 }
+weaponInfo = {
+      "mace": {
+            "damage": 20,
+            "type": "blunt",
+            "crit": 3,
+            "speed": "medium"
+      },
+      "sword": {
+            "damage": 15,
+            "type": "pierce",
+            "crit": 4,
+            "speed": "fast"
+      },
+      "greatsword": {
+            "damage": 35,
+            "type": "slash",
+            "crit": 2,
+            "speed": "slow"
+      }
+}
+
 
 locations = ("home", "town", "forest", "cave")
 currentLocation = "home"
@@ -34,6 +55,7 @@ monsters = []
 for x in monsterstat.monsters:
       monsters.append(x)
 
+monsters.sort()
 def locationChanger():
       x = True
       while x == True:
@@ -44,16 +66,59 @@ def locationChanger():
             else:
                   print("Not a valid location")
 
+def playerAttack():
+     print("A")
+
 def startBattle():
-      enemyCount = random.randint(1, monsterCount)
-      enemies = list(())
-      for x in range(1, enemyCount):
-            enemies.append(monsters[random.randint(0, monsterCount - 1)])
-    
 
+ enemyCount = random.randint(1, 3)
 
-      #print(enemies)
-      #print(len(enemies))
+ enemies = []
+
+ for x in range(2, enemyCount + 1):
+    enemies.append(monsters[random.randint(0, monsterCount - 1)])
+
+ enemies.sort()
+ numberEnemies = {}
+ for i in range(0, monsterCount):
+  numberEnemies[monsters[i]] = enemies.count(f"{monsters[i]}")
+
+ numbers = list(numberEnemies.values())
+
+ match len(enemies):
+      case 1:
+           encounterText = f"A {enemies[0]}"
+      case 2:
+           if enemies[0] == enemies[1]:
+                encounterText = f"Two {enemies[0]}"
+           else:
+            encounterText = f"A {enemies[0]} and {enemies[1]}"
+      case 3:
+           if 3 in numbers:
+                encounterText = f"Three {enemies[numbers.index(3)]}s"
+           elif 2 in numbers:
+                encounterText = f"Two {enemies[numbers.index(2)]}s and one {enemies[numbers.index(1)]}"
+           else:
+                encounterText = f"A {enemies[0]}, {enemies[1]} and {enemies[2]}"
+           
+
+ print(f"{encounterText} appear infront of {playerData["name"]}")
+
+ print("ATTACK|GUARD|HEAL")
+ a = True
+ while a == True:
+  action = input(f"What will {playerData['name']} do: ")
+ match action.lower:
+  case "attack":
+         playerAttack()
+         a = False
+  case "guard":
+        print("Not done")
+  case "heal":
+        print("Not done")
+  case _:
+        print("NOT AN ACTION")
+
 
 playerData["name"] = input("What name does it go by: ")
 playerName = playerData["name"]
@@ -74,4 +139,4 @@ while y == True:
 print(f"{playerName} wakes up in a cottage not to far from the local town.")
 currentLocation = locationChanger()
 if currentLocation == "forest":
-      startBattle()
+     startBattle()

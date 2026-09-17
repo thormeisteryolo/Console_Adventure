@@ -4,7 +4,7 @@ monsters = {
         "ap": 5,
         "damage": 20
     },
-    "golem": {
+    "stoner": {
         "maxhealth": 200,
         "ap": 50,
         "damage": 30
